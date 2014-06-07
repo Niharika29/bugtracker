@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<title>Report a Bug</title>
+		<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+	</head>
+	<body>
+		Hello {{ name }}!<br>
+		Your email is {{ email }}<br>
+		The bug you reported is: {{ bug }}<br><br>
+		<div id = 'ip'>Your IP address is: {{ ip }}</div><br>
+		<div id = 'os'></div><br>
+		<div id = 'browser'></div>
+		<div id = 'loadtime'></div>
+		<div id = 'speed'>Loading...</div>
+	</body>
+	<script src="{% static 'js/bugtracker.js' %}"></script>
+
+</html>
