@@ -190,10 +190,14 @@ DJANGO_APPS = (
     # Admin panel and documentation:
     'django.contrib.admin',
     # 'django.contrib.admindocs',
+    
+    'bugform',
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
+	#App for managing the bug reporting form functionality
+	
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
