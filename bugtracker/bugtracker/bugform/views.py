@@ -8,3 +8,6 @@ def index(request):
 	template = 'data.html'
 	context = { 'some_name': myname }
 	return render(request, template, context)
+	
+def formprocess(request):
+	return HttpResponse('You landed here. Deliberate mistake?')

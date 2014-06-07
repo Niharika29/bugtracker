@@ -1,6 +1,14 @@
+{% load staticfiles %}
 <html>
-	<head><title>Data</title></head>
+	<head><title>Bug Report Form</title></head>
 	<body>
 		<h2>Welcome {{ some_name }}</h2>
+		<form action = "formprocess" method = "POST">
+		{% csrf_token %}
+			<label>Email:</label><input type="text"><br>
+			<label>Bug:</label><input type="text"><br>
+			<input type="submit">
+		</form>
 	</body>
+	<script src="{% static 'js/bugtracker.js' %}"></script>
 </html>
