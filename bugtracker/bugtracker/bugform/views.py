@@ -25,10 +25,9 @@ def formprocess(request):
 	email = request.POST['email']
 	bug = request.POST['bug']
 	ip = getip(request)
-	geocountry = pygeoip.GeoIP('GeoIP.dat')
 	geocity = pygeoip.GeoIP('GeoLiteCity.dat')
-	country = geocountry.country_code_by_addr('122.161.236.2')
+	#country = geocountry.country_code_by_addr('122.161.236.2')
 	city = geocity.record_by_addr('122.161.236.2')
-	context = { 'name':name, 'email':email, 'bug':bug, 'ip':ip, 'country':country, 'city':city }
+	context = { 'name':name, 'email':email, 'bug':bug, 'ip':ip, 'city':city['city'], 'country':city['country_name'], 'timezone':city['time_zone'] }
 	
 	return render(request, template, context)

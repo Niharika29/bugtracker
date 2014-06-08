@@ -16,7 +16,7 @@ function getos() {
 		OSName = "Linux";
 	}
 	
-	$( '#os' ).html( 'Detected IP Address is: ' + OSName );
+	$( '#os' ).html( 'Detected Operating System is: ' + OSName );
 }
 
 function getbrowser() {
@@ -50,7 +50,8 @@ function getloadtime() {
 }
 
 function getspeed() {
-	var imageAddr = "../css/disney.jpg?n="+ Math.random();
+	var imageAddr = "http://oozie.org/wp-content/wallpapers/2013/09/Disney-World-Desktop-Wallpaper.jpg?n=" + Math.random();
+	//var imageAddr = "http://i.imgur.com/lR6IUex.jpg?n=" + Math.random();
 	var startTime, endTime;
 	var downloadSize = 1234979;
 	var download = new Image();
