@@ -71,10 +71,16 @@ function showResults( startTime, endTime, downloadSize ) {
 	var mbps = ( kbps/1024 ).toFixed(2);
 	$( '#speed' ).html( 'Detected bandwidth is: '+ mbps + 'Mbps' );
 }
-
+		 
 $( document ).ready( function() {
 	getos();
 	getbrowser();
 	getspeed();
 	getloadtime();
+	
+	html2canvas(document.body, {
+	onrendered: function( canvas ) {
+		document.body.appendChild( canvas );
+	}
+});
 } );
