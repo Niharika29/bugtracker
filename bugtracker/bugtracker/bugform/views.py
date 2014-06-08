@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 #from django.contrib.gis.utils import GeoIP
+import pygeoip
 
 # Create your views here.
 
@@ -24,6 +25,10 @@ def formprocess(request):
 	email = request.POST['email']
 	bug = request.POST['bug']
 	ip = getip(request)
-	context = { 'name':name, 'email':email, 'bug':bug, 'ip':ip }
+	geocountry = pygeoip.GeoIP('GeoIP.dat')
+	geocity = pygeoip.GeoIP('GeoLiteCity.dat')
+	country = geocountry.country_code_by_addr('122.161.236.2')
+	city = geocity.record_by_addr('122.161.236.2')
+	context = { 'name':name, 'email':email, 'bug':bug, 'ip':ip, 'country':country, 'city':city }
 	
 	return render(request, template, context)

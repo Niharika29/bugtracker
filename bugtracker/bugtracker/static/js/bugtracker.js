@@ -50,7 +50,7 @@ function getloadtime() {
 }
 
 function getspeed() {
-	var imageAddr = "disney.jpg"+ Math.random();
+	var imageAddr = "../css/disney.jpg?n="+ Math.random();
 	var startTime, endTime;
 	var downloadSize = 1234979;
 	var download = new Image();
