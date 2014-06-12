@@ -77,10 +77,5 @@ $( document ).ready( function() {
 	getbrowser();
 	getspeed();
 	getloadtime();
-	
-	html2canvas(document.body, {
-	onrendered: function( canvas ) {
-		document.body.appendChild( canvas );
-	}
 });
-} );
+
