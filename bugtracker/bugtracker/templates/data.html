@@ -8,8 +8,9 @@
 		{% csrf_token %}
 			{{ form.as_p }}
 			<input type="submit" onclick="capture()">
-			<input type="hidden" name="img" id="img" value="">
+			<input type="hidden" id="loadtime" value="">
 		</form>
 	</body>
 	<script src="{% static 'js/takescreenshot.js' %}"></script>
+	<script src="{% static 'js/fetchdata.js' %}"></script>
 </html>
