@@ -10,7 +10,13 @@ def index(request):
 	if request.method == 'POST':
 		form = BugForm(request.POST)
 		if form.is_valid():
-			#Process data in form.cleaned_data
+			form.save()
+			#formInstance = form.save(commit=False)
+			#formInstance.date = request.date
+			#formInstance.email = request.email
+			#formInstance.desc = request.desc
+			#formInstance.save()
+            #Process data in form.cleaned_data
 			name = 'Niharika'
 			template = 'postform.html'
 			email = request.POST['email']
