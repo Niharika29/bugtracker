@@ -192,6 +192,7 @@ DJANGO_APPS = (
     # 'django.contrib.admindocs',
     
     'bugform',
+    'django_tables2',
 )
 
 # Apps specific for this project go here.

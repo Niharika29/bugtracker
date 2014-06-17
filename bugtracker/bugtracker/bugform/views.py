@@ -1,10 +1,29 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-#from django.contrib.gis.utils import GeoIP
+from django.contrib.auth import authenticate, login
 import pygeoip
-from bugform.forms import BugForm
+from bugform.forms import BugForm, AdminForm, SimpleTable
+from bugform.models import BugModel, AdminModel
+import django_tables2 as tables 
+from django_tables2 import RequestConfig
 
 # Create your views here.
+
+def admin(request):
+	if request.method == 'POST':
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			q = BugModel.objects.all()
+			table = SimpleTable(q)
+			RequestConfig(request).configure(table)
+			return render(request, 'bugreports.html', {'table':table} )
+		else:
+			return HttpResponse('You are dead!')
+		
+	form = AdminForm()
+	return render(request, 'adminform.html', { 'form': form, })
 	
 def index(request):
 	if request.method == 'POST':

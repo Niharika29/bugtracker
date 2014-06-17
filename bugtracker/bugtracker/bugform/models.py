@@ -13,4 +13,7 @@ class BugModel(models.Model):
 	country = models.CharField(max_length=50)
 	timezone = models.CharField(max_length=100)
 	
+class AdminModel(models.Model):
+	username = models.CharField(max_length=30)
+	password = models.CharField(max_length=20)
 # Create your models here.
