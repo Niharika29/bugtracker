@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from bugform.models import BugModel, AdminModel
 import django_tables2 as tables
+from django_tables2.utils import A
 
 class BugForm(ModelForm):
 	class Meta:
@@ -13,7 +14,10 @@ class AdminForm(ModelForm):
 		fields = ['username', 'password']
 		
 class SimpleTable(tables.Table):
+	edit_link = tables.LinkColumn('bug_edit', args=[A('pk')], verbose_name='Edit', accessor='pk', attrs={'class':'edit_link'})
+	delete_link = tables.LinkColumn('bug_delete', args=[A('pk')], verbose_name='Delete Bug', accessor='pk', attrs={'class':'delete_link'})
 	class Meta:
+		attrs = {'class' : 'paleblue'}
 		model = BugModel
 		
 #form = BugForm()

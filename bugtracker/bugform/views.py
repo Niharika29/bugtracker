@@ -7,8 +7,6 @@ from bugform.models import BugModel, AdminModel
 import django_tables2 as tables 
 from django_tables2 import RequestConfig
 
-# Create your views here.
-
 def admin(request):
 	if request.method == 'POST':
 		username = request.POST['username']
@@ -68,3 +66,9 @@ def getip(request):
 	else:
 		ip = request.META.get('REMOTE_ADDR') 
 	return ip
+	
+def bug_edit(request):
+	return HttpResponse('This is an edit page!')
+	
+def bug_delete(request):
+	return HttpResponse('This is a delete page!')
