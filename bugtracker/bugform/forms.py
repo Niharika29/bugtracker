@@ -14,8 +14,8 @@ class AdminForm(ModelForm):
 		fields = ['username', 'password']
 		
 class SimpleTable(tables.Table):
-	edit_link = tables.LinkColumn('bug_edit', args=[A('pk')], verbose_name='Edit', accessor='pk', attrs={'class':'edit_link'})
-	delete_link = tables.LinkColumn('bug_delete', args=[A('pk')], verbose_name='Delete Bug', accessor='pk', attrs={'class':'delete_link'})
+	edit_link = tables.LinkColumn('bugform.views.bug_edit', args=[A('pk')], verbose_name='Edit', accessor='pk', attrs={'class':'edit_link'})
+	delete_link = tables.LinkColumn('bugform.views.bug_delete', args=[A('pk')], verbose_name='Delete Bug', accessor='pk', attrs={'class':'delete_link'})
 	class Meta:
 		attrs = {'class' : 'paleblue'}
 		model = BugModel

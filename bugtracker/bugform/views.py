@@ -20,8 +20,12 @@ def admin(request):
 		else:
 			return HttpResponse('You are dead!')
 		
-	form = AdminForm()
-	return render(request, 'adminform.html', { 'form': form, })
+	#form = AdminForm()
+	#return render(request, 'adminform.html', { 'form': form, })
+	q = BugModel.objects.all()
+	table = SimpleTable(q)
+	RequestConfig(request).configure(table)
+	return render(request, 'bugreports.html', {'table':table} )
 	
 def index(request):
 	if request.method == 'POST':
@@ -67,8 +71,8 @@ def getip(request):
 		ip = request.META.get('REMOTE_ADDR') 
 	return ip
 	
-def bug_edit(request):
-	return HttpResponse('This is an edit page!')
+def bug_edit(request, pk):
+	return HttpResponse('This is an edit page!' + pk)
 	
-def bug_delete(request):
-	return HttpResponse('This is a delete page!')
+def bug_delete(request, pk):
+	return HttpResponse('This is a delete page!' + pk)
