@@ -6,9 +6,10 @@
 		<h2>Welcome {{ some_name }}</h2>
 		<form id="bug-form" action = "" method = "POST">
 		{% csrf_token %}
-			{{ form.as_p }}
+		<table id='bugreptable'>
+			{{ form.as_table }}
+		</table>
 			<input type="submit" onclick="capture()">
-			<input type="hidden" id="loadtime" value="">
 		</form>
 	</body>
 
