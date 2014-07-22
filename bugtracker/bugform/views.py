@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 import pygeoip
 from bugform.forms import BugForm, AdminForm, SimpleTable
@@ -72,7 +72,37 @@ def getip(request):
 	return ip
 	
 def bug_edit(request, pk):
-	return HttpResponse('This is an edit page!' + pk)
+	if request.method == 'POST':
+		record = BugModel.objects.get(pk=pk)
+		form = BugForm(request.POST, instance=record)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('../../admin')
+
+	else:
+		record = BugModel.objects.get(pk=pk)
+		lt = record.loadtime
+		data = {
+			'date':record.date,
+			'email': record.email,
+			'desc': record.desc,
+			'os': record.os,
+			'browser': record.browser,
+			'loadtime': lt,
+			'ip': record.ip, 
+			'city': record.city,
+			'country': record.country,
+			'timezone': record.timezone,
+			'netspeed':record.netspeed 
+		}
+		
+		form = BugForm(initial=data)
+	return render(request, 'editbugform.html', { 'form': form, })
 	
 def bug_delete(request, pk):
-	return HttpResponse('This is a delete page!' + pk)
+	record = BugModel.objects.get(pk=pk)
+	record.delete()
+	return HttpResponseRedirect('../../admin')
+	
+	
+	

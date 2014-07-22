@@ -19,5 +19,3 @@ class SimpleTable(tables.Table):
 	class Meta:
 		attrs = {'class' : 'paleblue'}
 		model = BugModel
-		
-#form = BugForm()
