@@ -6,7 +6,7 @@ from django_tables2.utils import A
 class BugForm(ModelForm):
 	class Meta:
 		model = BugModel
-		fields = ['email', 'desc', 'date', 'loadtime', 'city', 'country', 'timezone', 'ip', 'netspeed', 'os', 'browser']
+		fields = ['email', 'desc', 'date', 'loadtime', 'city', 'country', 'timezone', 'ip', 'netspeed', 'os', 'browser', 'bugstatus','bugpriority']
 		
 class AdminForm(ModelForm):
 	class Meta:

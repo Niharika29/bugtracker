@@ -93,7 +93,9 @@ def bug_edit(request, pk):
 			'city': record.city,
 			'country': record.country,
 			'timezone': record.timezone,
-			'netspeed':record.netspeed 
+			'netspeed': record.netspeed,
+			'bugstatus': record.bugstatus,
+			'bugpriority': record.bugpriority
 		}
 		
 		form = BugForm(initial=data)

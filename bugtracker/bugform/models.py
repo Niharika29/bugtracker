@@ -14,20 +14,21 @@ class BugModel(models.Model):
 	timezone = models.CharField(max_length=100)
 	framerate = models.FloatField(default='0')
 	
-	NEW = 'NEW'
-	RESOLVED = 'RES'
-	DISCARDED = 'DIS'
-	PATCH_TO_REVIEW = 'PTR'
-	ASSIGNED = 'ASS'
 	STATUS_CHOICES = (
-		(NEW, 'New'),
-		(ASSIGNED, 'Assigned'),
-		(DISCARDED, 'Discard'),
-		(PATCH_TO_REVIEW, 'Patch under review'),
-		(RESOLVED, 'Resolved'),
+		('New', 'New'),
+		('Assigned', 'Assigned'),
+		('Discard', 'Discard'),
+		('Patch to review', 'Patch under review'),
+		('Resolved', 'Resolved'),
 	)
-	bugstatus = models.CharField(max_length=100, default=NEW, choices = STATUS_CHOICES)
-	bugpriority = models.CharField(max_length=100, default='Normal')
+	bugstatus = models.CharField(max_length=100, default='New', choices = STATUS_CHOICES)
+	
+	PRIORITY_CHOICES = (
+		('High', 'High'),
+		('Normal','Normal'),
+		('Low', 'Low'),
+	)
+	bugpriority = models.CharField(max_length=100, default='Unprioritised', choices = PRIORITY_CHOICES)
 	
 class AdminModel(models.Model):
 	username = models.CharField(max_length=30)
