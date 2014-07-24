@@ -81,14 +81,13 @@ def bug_edit(request, pk):
 
 	else:
 		record = BugModel.objects.get(pk=pk)
-		lt = record.loadtime
 		data = {
 			'date':record.date,
 			'email': record.email,
 			'desc': record.desc,
 			'os': record.os,
 			'browser': record.browser,
-			'loadtime': lt,
+			'loadtime': record.loadtime,
 			'ip': record.ip, 
 			'city': record.city,
 			'country': record.country,

@@ -28,7 +28,7 @@ class BugModel(models.Model):
 		('Normal','Normal'),
 		('Low', 'Low'),
 	)
-	bugpriority = models.CharField(max_length=100, default='Unprioritised', choices = PRIORITY_CHOICES)
+	bugpriority = models.CharField(max_length=100, default='Normal', choices = PRIORITY_CHOICES)
 	
 class AdminModel(models.Model):
 	username = models.CharField(max_length=30)
