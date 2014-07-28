@@ -31,9 +31,9 @@ import os
 from os.path import join, dirname, abspath
 import datetime
 
-from fabric.api import run, env, sudo, cd, local, task, require
+from fabric.api import run, env, sudo, cd, local, task
 from fabric.contrib.files import sed
-from fabtools import postgres, supervisor, user
+from fabtools import require, postgres, supervisor, user
 from fabtools.files import upload_template
 from fabtools.require import deb, nginx
 
@@ -107,11 +107,11 @@ def get_vagrant_config():
 def update_repo(commit='origin/master'):
     if not os.path.exists(CLONE_DIR):
         with cd(SITE_DIR):
-            user_do('git clone %s' % GIT_URL)
+            sudo('git clone %s' % GIT_URL, user=SITE_USER)
 
     with cd(CLONE_DIR):
-        user_do('git fetch')
-        user_do('git checkout %s' % commit)
+        sudo('git fetch', user=SITE_USER)
+        sudo('git checkout %s' % commit, user=SITE_USER)
 
 
 @task
@@ -119,8 +119,8 @@ def build_static(venv_path):
     activate_cmd = 'source %s' % join(SITE_DIR, VENV_DIR, 'bin/activate')
     collect_cmd = 'python manage.py collectstatic --noinput --clear'
     with cd(DJANGO_DIR):
-        user_do('%s && %s' % (activate_cmd, collect_cmd))
-    user_do('chmod -R a+rx %s' % join(SITE_DIR, 'site_media'))
+        sudo('%s && %s' % (activate_cmd, collect_cmd), user=SITE_USER)
+    sudo('chmod -R a+rx %s' % join(SITE_DIR, 'site_media'))
 
 
 @task
@@ -195,8 +195,8 @@ def build_venv():
     dirs = run('ls %s' % VENV_DIR).split()
     if commit not in dirs:
         print "Virtual env for commit doesn't exist.  Creating."
-        user_do('virtualenv %s' % venv_path)
-        user_do('%s && %s' % (activate, install))
+        sudo('virtualenv %s' % venv_path, user=SITE_USER)
+        sudo('%s && %s' % (activate, install), user=SITE_USER)
     else:
         print 'Virtual env exists.'
 
@@ -205,7 +205,7 @@ def build_venv():
     new_venvs.sort()
     human_path = today + '.%i' % len(new_venvs)
     with cd(VENV_DIR):
-        user_do('ln -s %s %s' % (commit, human_path))
+        sudo('ln -s %s %s' % (commit, human_path), user=SITE_USER)
     return join(VENV_DIR, human_path)
 
 
@@ -261,17 +261,11 @@ def update_dependencies():
     sudo('pip install -U setproctitle')
 
 
-def user_do(cmd, cmd_user=None):
-    if cmd_user is None:
-        cmd_user = SITE_USER
-    sudo("su %s -c '%s'" % (cmd_user, cmd))
-
-
 def setup_database():
     require.postgres.server()
     # NOTE: fabtools.require.postgres.user did not allow me to create a user with no pw prompt?
     if not postgres.user_exists(SITE_USER):
-        user_do('createuser -S -D -R -w %s' % SITE_USER, 'postgres')
+        sudo('createuser -S -D -R -w %s' % SITE_USER, user='postgres')
     if not postgres.database_exists(SITE_USER):
         require.postgres.database(SITE_USER, SITE_USER, encoding='UTF8', locale='en_US.UTF-8')
 
@@ -292,10 +286,10 @@ def configure_ssh():
 def setup_sitepaths():
     """Creates site directories if they do not already exist
     """
-    user_do('mkdir -p %s' % env['SITE_DIR'])
-    user_do('mkdir -p %s' % env['VENV_DIR'])
-    user_do('mkdir -p %s' % join(env['SITE_DIR'], 'bin'))
-    user_do('mkdir -p %s' % join(env['SITE_DIR'], 'logs'))
-    user_do('mkdir -p %s' % join(env['SITE_DIR'], 'site_media'))
-    user_do('mkdir -p %s' % join(env['SITE_DIR'], 'site_media', 'static'))
-    user_do('mkdir -p %s' % join(env['SITE_DIR'], 'site_media', 'media'))
+    sudo('mkdir -p %s' % SITE_DIR, user=SITE_USER)
+    sudo('mkdir -p %s' % VENV_DIR, user=SITE_USER)
+    sudo('mkdir -p %s' % join(SITE_DIR, 'bin'), user=SITE_USER)
+    sudo('mkdir -p %s' % join(SITE_DIR, 'logs'), user=SITE_USER)
+    sudo('mkdir -p %s' % join(SITE_DIR, 'site_media'), user=SITE_USER)
+    sudo('mkdir -p %s' % join(SITE_DIR, 'site_media', 'static'), user=SITE_USER)
+    sudo('mkdir -p %s' % join(SITE_DIR, 'site_media', 'media'), user=SITE_USER)
