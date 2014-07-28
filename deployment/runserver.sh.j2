@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+export DJANGO_SETTINGS_MODULE={{ settings_module }}
+
+VIRTUALENV={{ venv_dir }}
+NUM_WORKERS=2
+
+# user/group to run as
+USER={{ site_user }}
+GROUP={{ site_group }}
+LOG_LEVEL={{ log_level }}
+
+cd {{ site_dir }}
+source ${VIRTUALENV}/bin/activate
+
+exec ${VIRTUALENV}/bin/gunicorn {{ wsgi_module }}:application \
+    -w $NUM_WORKERS \
+    --user=$USER \
+    --group=$GROUP \
+    --pythonpath {{ repo_dir }} \
+    --bind localhost:{{ gunicorn_port }} \
+    --log-level=$LOG_LEVEL

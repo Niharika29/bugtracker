@@ -1,0 +1,10 @@
+[program:{{ supervised_process }}]
+directory = {{ site_dir }}
+user = {{ site_user }}
+group = {{ site_user }}
+command = {{ site_dir }}/bin/runserver.sh
+autostart = true
+stdout_logfile = {{ site_dir }}/logs/gunicorn.log
+redirect_stderr = true
+stopasgroup=true
+killasgroup=true

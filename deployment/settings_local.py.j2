@@ -1,0 +1,26 @@
+# This is a sample settings_local.py file. To use it, do:
+#
+# 1. cp settings_local.py-dist settings_local.py
+# 2. edit with your editor
+#
+# See settings.py and documentation for other things you can configure.
+import dj_database_url
+
+DEBUG = False
+
+SITE_TITLE = u'{{ django_site_name }}'
+
+ADMINS = {{ django_admins }}
+
+SECRET_KEY = '{{ secret_key }}'
+
+ALLOWED_HOSTS = {{ django_allowed_hosts }}
+
+BROWSERID_AUDIENCES = {{ django_browserid_audiences }}
+
+API = {{ richard_api_enabled }}
+
+# dj_database_url will pull from the DATABASE_URL environment variable
+DATABASES = {
+    'default': dj_database_url.config(default='postgres://:5432/richard'),
+}
