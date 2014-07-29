@@ -32,7 +32,7 @@ from os.path import join, dirname, abspath
 import datetime
 
 from fabric.api import run, env, sudo, cd, local, task
-from fabric.contrib.files import sed
+from fabric.contrib.files import sed, exists
 from fabtools import require, postgres, supervisor, user
 from fabtools.files import upload_template
 from fabtools.require import deb, nginx
@@ -78,8 +78,9 @@ def vagrant():
     """Configures environment-specific settings for deploying to a vagrant box
     """
     env.update({
-        'server_name': 'localhost',
-        'local_settings': 'deployment/prod_settings.py',
+        'SERVER_NAME': 'localhost',
+        'DJANGO_SETTINGS_MODULE': 'bugtracker.settings.local',
+        'REQUIREMENTS_FILE': 'requirements/local.txt',
     })
     vc = get_vagrant_config()
     # change from the default user to 'vagrant'
@@ -105,7 +106,7 @@ def get_vagrant_config():
 
 @task
 def update_repo(commit='origin/master'):
-    if not os.path.exists(CLONE_DIR):
+    if not exists(CLONE_DIR):
         with cd(SITE_DIR):
             sudo('git clone %s' % GIT_URL, user=SITE_USER)
 
@@ -116,8 +117,8 @@ def update_repo(commit='origin/master'):
 
 @task
 def build_static(venv_path):
-    activate_cmd = 'source %s' % join(SITE_DIR, VENV_DIR, 'bin/activate')
-    collect_cmd = 'python manage.py collectstatic --noinput --clear'
+    activate_cmd = 'source %s' % join(venv_path, 'bin/activate')
+    collect_cmd = 'python manage.py collectstatic --noinput --clear --settings=%s' % env['DJANGO_SETTINGS_MODULE']
     with cd(DJANGO_DIR):
         sudo('%s && %s' % (activate_cmd, collect_cmd), user=SITE_USER)
     sudo('chmod -R a+rx %s' % join(SITE_DIR, 'site_media'))
@@ -151,11 +152,11 @@ def restart_nginx():
 
 @task
 def deploy_nginx():
-    require('server_name', provided_by=('vagrant'))
+    require('SERVER_NAME', provided_by=('vagrant'))
     upload_template('site.conf.j2', 
                     '/etc/nginx/sites-available/site.conf',
                     context={
-                        'nginx_server_name': env['server_name'],
+                        'nginx_server_name': env['SERVER_NAME'],
                         'site_dir': SITE_DIR,
                         'static_dir': join(SITE_DIR, 'site_media', 'static'),
                         'static_parent_dir': join(SITE_DIR, 'site_media'),
@@ -190,7 +191,7 @@ def build_venv():
         commit = run('git rev-parse HEAD').strip()
     venv_path = join(VENV_DIR, commit)
     activate = 'source %s' % join(venv_path, 'bin/activate')
-    install = 'pip install -r %s' % join(CLONE_DIR, 'requirements.txt')
+    install = 'pip install -r %s' % join(CLONE_DIR, env['REQUIREMENTS_FILE'])
 
     dirs = run('ls %s' % VENV_DIR).split()
     if commit not in dirs:
@@ -219,7 +220,7 @@ def put_runserver(venv):
     upload_template('runserver.sh.j2',
                     join(SITE_DIR, 'bin', 'runserver.sh'),
                     context={
-                        'settings_module': 'bugtracker',
+                        'settings_module': env['DJANGO_SETTINGS_MODULE'],
                         'venv_dir': venv,
                         'site_user': SITE_USER,
                         'site_group': SITE_USER,
