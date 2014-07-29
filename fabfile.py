@@ -32,6 +32,7 @@ from os.path import join, dirname, abspath
 import datetime
 
 from fabric.api import run, env, sudo, cd, local, task
+from fabric.api import require as frequire
 from fabric.contrib.files import sed, exists
 from fabtools import require, postgres, supervisor, user
 from fabtools.files import upload_template
@@ -118,6 +119,7 @@ def update_repo(commit='origin/master'):
 
 @task
 def build_static(venv_path):
+    frequire('DJANGO_SETTINGS_MODULE', provided_by=('vagrant',))
     activate_cmd = 'source %s' % join(venv_path, 'bin/activate')
     collect_cmd = 'python manage.py collectstatic --noinput --clear --settings=%s' % env['DJANGO_SETTINGS_MODULE']
     with cd(DJANGO_DIR):
@@ -153,7 +155,7 @@ def restart_nginx():
 
 @task
 def deploy_nginx():
-    require('SERVER_NAME', provided_by=('vagrant'))
+    frequire('SERVER_NAME', provided_by=('vagrant',))
     upload_template('site.conf.j2', 
                     '/etc/nginx/sites-available/site.conf',
                     context={
@@ -218,6 +220,7 @@ def deploy_venv():
 
 
 def put_runserver(venv):
+    frequire('DJANGO_SETTINGS_MODULE', provided_by=('vagrant',))
     upload_template('runserver.sh.j2',
                     join(SITE_DIR, 'bin', 'runserver.sh'),
                     context={
