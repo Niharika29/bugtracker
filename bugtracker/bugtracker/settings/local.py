@@ -27,7 +27,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bugdb',
+        'NAME': 'bugtracker',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
