@@ -82,7 +82,7 @@ def vagrant():
     env.update({
         'SERVER_NAME': 'localhost',
         'DJANGO_SETTINGS_MODULE': 'bugtracker.settings.vagrant',
-        'REQUIREMENTS_FILE': 'requirements/local.txt',
+        'REQUIREMENTS_FILE': 'requirements/vagrant.txt',
     })
     vc = get_vagrant_config()
     # change from the default user to 'vagrant'
@@ -145,7 +145,7 @@ def start(process_name):
 def restart(process_name):
     """restarts supervisor process
     """
-    supervisor.restart(process_name)
+    supervisor.restart_process(process_name)
 
 
 @task
@@ -175,7 +175,7 @@ def deploy_nginx():
 
 @task
 def deploy_supervisor():
-    upload_template('deployment/supervised_process.conf.j2',
+    upload_template('supervised_process.conf.j2',
                     '/etc/supervisor/conf.d/%s.conf' % SITE_NAME,
                     context={
                         'supervised_process': SITE_NAME,
@@ -183,6 +183,8 @@ def deploy_supervisor():
                         'site_user': SITE_USER,
                         'group': SITE_USER,
                     },
+                    template_dir=TEMPLATE_DIR,
+                    use_jinja=True,
                     use_sudo=True)
     supervisor.update_config()
 
@@ -221,8 +223,9 @@ def deploy_venv():
 
 def put_runserver(venv):
     frequire('DJANGO_SETTINGS_MODULE', provided_by=('vagrant',))
+    destination_file = join(SITE_DIR, 'bin', 'runserver.sh')
     upload_template('runserver.sh.j2',
-                    join(SITE_DIR, 'bin', 'runserver.sh'),
+                    destination_file,
                     context={
                         'settings_module': env['DJANGO_SETTINGS_MODULE'],
                         'venv_dir': venv,
@@ -239,6 +242,7 @@ def put_runserver(venv):
                     use_sudo=True,
                     chown=True,
                     user=SITE_USER)
+    sudo('chmod +x %s' % destination_file)
 
 
 def update_dependencies():
