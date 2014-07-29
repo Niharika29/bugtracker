@@ -80,7 +80,7 @@ def vagrant():
     """Configures environment-specific settings for deploying to a vagrant box
     """
     env.update({
-        'SERVER_NAME': 'localhost',
+        'SERVER_NAME': '127.0.0.1',
         'DJANGO_SETTINGS_MODULE': 'bugtracker.settings.vagrant',
         'REQUIREMENTS_FILE': 'requirements/vagrant.txt',
     })
@@ -157,7 +157,7 @@ def restart_nginx():
 def deploy_nginx():
     frequire('SERVER_NAME', provided_by=('vagrant',))
     upload_template('site.conf.j2', 
-                    '/etc/nginx/sites-available/site.conf',
+                    '/etc/nginx/sites-available/%s' % SITE_NAME,
                     context={
                         'nginx_server_name': env['SERVER_NAME'],
                         'site_dir': SITE_DIR,
@@ -233,7 +233,7 @@ def put_runserver(venv):
                         'site_group': SITE_USER,
                         'log_level': 'info',
                         'site_dir': join(CLONE_DIR, 'bugtracker'),
-                        'wsgi_module': 'bugtracker',
+                        'wsgi_module': 'bugtracker.wsgi',
                         'repo_dir': CLONE_DIR,
                         'gunicorn_port': '8001',
                     },
