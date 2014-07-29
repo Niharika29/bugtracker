@@ -48,7 +48,8 @@ SITE_DIR = '/home/bugtracker/site'
 VENV_DIR = '/home/bugtracker/venvs'
 CLONE_DIR = '/home/bugtracker/site/bugtracker'
 DJANGO_DIR = '/home/bugtracker/site/bugtracker/bugtracker'
-GIT_URL = 'git://github.com/Niharika29/bugtracker.git'
+#GIT_URL = 'git://github.com/Niharika29/bugtracker.git'
+GIT_URL = 'git://github.com/codersquid/bugtracker.git'
 SITE_NAME = 'bugtracker'
 
 
@@ -79,7 +80,7 @@ def vagrant():
     """
     env.update({
         'SERVER_NAME': 'localhost',
-        'DJANGO_SETTINGS_MODULE': 'bugtracker.settings.local',
+        'DJANGO_SETTINGS_MODULE': 'bugtracker.settings.vagrant',
         'REQUIREMENTS_FILE': 'requirements/local.txt',
     })
     vc = get_vagrant_config()
