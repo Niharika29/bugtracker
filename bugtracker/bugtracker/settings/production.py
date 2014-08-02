@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 
 from os import environ
-
+from env.secret_key import Keys
 from .base import *
 
 # Normally you should not import ANYTHING from Django directly
@@ -63,5 +63,5 @@ CACHES = {}
 
 ########## SECRET CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = get_env_setting('SECRET_KEY')
+SECRET_KEY = env.secret_key.Keys.key
 ########## END SECRET CONFIGURATION

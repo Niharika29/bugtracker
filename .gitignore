@@ -38,7 +38,10 @@ tramp
 Thumbs.db
 Desktop.ini
 
-#Virtualenv
+# Virtualenv
 /venv
 
 .vagrant
+
+# Secret keys
+/bugtracker/bugtracker/settings/env

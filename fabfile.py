@@ -59,7 +59,7 @@ def deploy(commit='origin/master'):
     update_dependencies()
     update_repo(commit=commit)
     venv_path = deploy_venv()
-    build_static(venv_path)
+    #build_static(venv_path)
     deploy_supervisor()
     restart(SITE_NAME)
     deploy_nginx()
@@ -188,6 +188,16 @@ def deploy_supervisor():
                     use_sudo=True)
     supervisor.update_config()
 
+@task
+def staging():
+	"""Configures settings for deployment to a vagrant box """
+	env.hosts = ['niharika@23.253.42.97']
+	env.password = 'V5Qc&=HW`=iT=_I8%Q3Tc:;V)OoCj[N`'
+	env.update({
+		'SERVER_NAME':'niharika@23.253.42.97',
+		'DJANGO_SETTINGS_MODULE':'bugtracker.settings.production',
+		'REQUIREMENTS_FILE':'requirements.txt'
+	})
 
 def build_venv():
     """ make a virtualenv for every new HEAD that we check out
@@ -302,3 +312,4 @@ def setup_sitepaths():
     sudo('mkdir -p %s' % join(SITE_DIR, 'site_media'), user=SITE_USER)
     sudo('mkdir -p %s' % join(SITE_DIR, 'site_media', 'static'), user=SITE_USER)
     sudo('mkdir -p %s' % join(SITE_DIR, 'site_media', 'media'), user=SITE_USER)
+    
