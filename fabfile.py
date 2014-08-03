@@ -49,8 +49,8 @@ SITE_DIR = '/home/bugtracker/site'
 VENV_DIR = '/home/bugtracker/venvs'
 CLONE_DIR = '/home/bugtracker/site/bugtracker'
 DJANGO_DIR = '/home/bugtracker/site/bugtracker/bugtracker'
-#GIT_URL = 'git://github.com/Niharika29/bugtracker.git'
-GIT_URL = 'git://github.com/codersquid/bugtracker.git'
+GIT_URL = 'git://github.com/Niharika29/bugtracker.git'
+#GIT_URL = 'git://github.com/codersquid/bugtracker.git'
 SITE_NAME = 'bugtracker'
 
 
