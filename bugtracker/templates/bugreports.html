@@ -1,2 +1,20 @@
 {% load django_tables2 %}
-{% render_table table %}
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script src='http://code.jquery.com/jquery-latest.min.js' type='text/javascript'></script>
+	<link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}">
+</head>
+<body>
+	<p>
+		{% render_table table %}
+	</p>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//$('.edit_link').text('Edit');
+		//$('.delete_link').text('Delete');
+	});
+</script>
+</html>

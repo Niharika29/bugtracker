@@ -1,0 +1,16 @@
+{% load staticfiles %}
+<html>
+	<head><title>Bug Report Form</title></head>
+	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+	<body>
+		<h2>Welcome {{ some_name }}</h2>
+		<form id="bug-form" action = "" method = "POST">
+		{% csrf_token %}
+		<table id='bugreptable'>
+			{{ form.as_table }}
+		</table>
+			<input type="submit" onclick="capture()">
+		</form>
+	</body>
+
+</html>

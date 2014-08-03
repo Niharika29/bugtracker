@@ -6,6 +6,10 @@ from os.path import join, normpath
 
 from .base import *
 
+PROJECT_ROOT = join(dirname(dirname(SITE_ROOT)), 'site_media')
+
+MEDIA_ROOT = normpath(join(PROJECT_ROOT, 'media'))
+STATIC_ROOT = normpath(join(PROJECT_ROOT, 'static'))
 
 ########## DEBUG CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug

@@ -1,13 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 import pygeoip
 from bugform.forms import BugForm, AdminForm, SimpleTable
 from bugform.models import BugModel, AdminModel
 import django_tables2 as tables 
 from django_tables2 import RequestConfig
-
-# Create your views here.
 
 def admin(request):
 	if request.method == 'POST':
@@ -22,8 +20,12 @@ def admin(request):
 		else:
 			return HttpResponse('You are dead!')
 		
-	form = AdminForm()
-	return render(request, 'adminform.html', { 'form': form, })
+	#form = AdminForm()
+	#return render(request, 'adminform.html', { 'form': form, })
+	q = BugModel.objects.all()
+	table = SimpleTable(q)
+	RequestConfig(request).configure(table)
+	return render(request, 'bugreports.html', {'table':table} )
 	
 def index(request):
 	if request.method == 'POST':
@@ -68,3 +70,40 @@ def getip(request):
 	else:
 		ip = request.META.get('REMOTE_ADDR') 
 	return ip
+	
+def bug_edit(request, pk):
+	if request.method == 'POST':
+		record = BugModel.objects.get(pk=pk)
+		form = BugForm(request.POST, instance=record)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('../../admin')
+
+	else:
+		record = BugModel.objects.get(pk=pk)
+		data = {
+			'date':record.date,
+			'email': record.email,
+			'desc': record.desc,
+			'os': record.os,
+			'browser': record.browser,
+			'loadtime': record.loadtime,
+			'ip': record.ip, 
+			'city': record.city,
+			'country': record.country,
+			'timezone': record.timezone,
+			'netspeed': record.netspeed,
+			'bugstatus': record.bugstatus,
+			'bugpriority': record.bugpriority
+		}
+		
+		form = BugForm(initial=data)
+	return render(request, 'editbugform.html', { 'form': form, })
+	
+def bug_delete(request, pk):
+	record = BugModel.objects.get(pk=pk)
+	record.delete()
+	return HttpResponseRedirect('../../admin')
+	
+	
+	

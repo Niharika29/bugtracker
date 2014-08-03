@@ -3,13 +3,17 @@
 from __future__ import absolute_import
 
 from os import environ
-
+from os.path import join, normpath
 from .base import *
 
 # Normally you should not import ANYTHING from Django directly
 # into your settings, but ImproperlyConfigured is an exception.
 from django.core.exceptions import ImproperlyConfigured
 
+PROJECT_ROOT = join(dirname(dirname(SITE_ROOT)), 'site_media')
+
+MEDIA_ROOT = normpath(join(PROJECT_ROOT, 'media'))
+STATIC_ROOT = normpath(join(PROJECT_ROOT, 'static'))
 
 def get_env_setting(setting):
     """ Get the environment setting or return exception """
@@ -21,7 +25,9 @@ def get_env_setting(setting):
 
 ########## HOST CONFIGURATION
 # See: https://docs.djangoproject.com/en/1.5/releases/1.5/#allowed-hosts-required-in-production
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+	'*',
+]
 ########## END HOST CONFIGURATION
 
 ########## EMAIL CONFIGURATION
@@ -57,7 +63,11 @@ DATABASES = {}
 
 ########## CACHE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
-CACHES = {}
+CACHES = {
+	'default': {
+		'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+	}
+}
 ########## END CACHE CONFIGURATION
 
 
