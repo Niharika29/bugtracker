@@ -3,6 +3,8 @@
 set -e
 export DJANGO_SETTINGS_MODULE={{ settings_module }}
 
+source	/home/bugtracker/site/bin/env.sh 
+
 VIRTUALENV={{ venv_dir }}
 NUM_WORKERS=2
 
