@@ -3,13 +3,17 @@
 from __future__ import absolute_import
 
 from os import environ
-from env.secret_key import Keys
+from os.path import join, normpath
 from .base import *
 
 # Normally you should not import ANYTHING from Django directly
 # into your settings, but ImproperlyConfigured is an exception.
 from django.core.exceptions import ImproperlyConfigured
 
+PROJECT_ROOT = join(dirname(dirname(SITE_ROOT)), 'site_media')
+
+MEDIA_ROOT = normpath(join(PROJECT_ROOT, 'media'))
+STATIC_ROOT = normpath(join(PROJECT_ROOT, 'static'))
 
 def get_env_setting(setting):
     """ Get the environment setting or return exception """
