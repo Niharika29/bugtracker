@@ -65,6 +65,7 @@ DATABASES = {
 		'PASSWORD': '',
 		'HOST': '',
 		'PORT': '',
+	}
 }
 ########## END DATABASE CONFIGURATION
 
