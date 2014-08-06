@@ -6,6 +6,7 @@ from bugform.forms import BugForm, AdminForm, SimpleTable
 from bugform.models import BugModel, AdminModel
 import django_tables2 as tables 
 from django_tables2 import RequestConfig
+from ipware.ip import get_ip
 
 def admin(request):
 	if request.method == 'POST':
@@ -50,7 +51,7 @@ def index(request):
 			return render(request, template, context)
 
 	else:
-		ip = getip(request)
+		ip = get_ip(request)
 		geocity = pygeoip.GeoIP('GeoLiteCity.dat')
 		city = geocity.record_by_addr('122.161.236.2')
 		data = {'ip':ip, 
