@@ -21,24 +21,14 @@ def admin(request):
 		else:
 			return HttpResponse('You are dead!')
 		
-	#form = AdminForm()
-	#return render(request, 'adminform.html', { 'form': form, })
-	q = BugModel.objects.all()
-	table = SimpleTable(q)
-	RequestConfig(request).configure(table)
-	return render(request, 'bugreports.html', {'table':table} )
+	form = AdminForm()
+	return render(request, 'adminform.html', { 'form': form, })
 	
 def index(request):
 	if request.method == 'POST':
 		form = BugForm(request.POST)
 		if form.is_valid():
 			form.save()
-			#formInstance = form.save(commit=False)
-			#formInstance.date = request.date
-			#formInstance.email = request.email
-			#formInstance.desc = request.desc
-			#formInstance.save()
-            #Process data in form.cleaned_data
 			template = 'postform.html'
 			return render(request, template)
 
@@ -97,6 +87,4 @@ def bug_delete(request, pk):
 	record = BugModel.objects.get(pk=pk)
 	record.delete()
 	return HttpResponseRedirect('../../admin')
-	
-	
-	
+		
