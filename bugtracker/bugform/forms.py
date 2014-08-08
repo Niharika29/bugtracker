@@ -19,8 +19,10 @@ class BugForm(ModelForm):
 			'timezone':forms.HiddenInput(),
 			'ip':forms.HiddenInput(),
 			'netspeed':forms.HiddenInput(),
-			'desc':forms.Textarea
+			'desc':forms.Textarea,
+			'bugpriority':forms.RadioSelect()
 			}
+
 		
 class AdminForm(ModelForm):
 	class Meta:

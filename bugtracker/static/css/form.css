@@ -1,6 +1,7 @@
 body {
 	font-size: 14px;
 	font-family: "Calibri", sans-serif;
+	font-weight: 200;
 }
 
 input {
@@ -8,16 +9,32 @@ input {
 }
 
 #container {
-	width: 50%;
+	width: 60%;
 	margin: 30px auto;
 }
 
+#header {
+	font-size: 14px;
+	padding: 16px;
+}
+
 label {
-	color: red;
+	color: blue;
 	padding: 10px auto;
 }
 
 input[type=submit] {
 	padding: 5px 40px;
-	margin: 10px 50%;
+	color:white;
+	background:blue;
+	border-radius: 10px;
+}
+
+ul {
+	list-style:none;
+}
+
+input[type=radio] {
+	display: inline;
+	position: relative;
 }
