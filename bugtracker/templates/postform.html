@@ -5,19 +5,10 @@
 		<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 	</head>
 	<body>
-		Hello {{ name }}!<br>
-		Your email: {{ email }}<br>
-		Bug reported: {{ bug }}<br><br>
-		<div id = 'ip'>IP address: {{ ip }}</div><br>
-		<div id = 'geolocation'>Country: {{ country }}</div>
-		<p> City is: {{ city }}</p>
-		<p> Timezone: {{ timezone }}</p>
-		<div id = 'os'></div><br>
-		<div id = 'browser'></div>
-		<div id = 'loadtime'></div>
-		<div id = 'speed'>Loading...</div>
+		<div id = 'response'>
+			<center>
+				Thanks for your feedback! We'll work on fixing the issue asap.
+			</center>
+		</div>
 	</body>
-	<script src="{% static 'js/bugtracker.js' %}"></script>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}"/>
-	<script src="{% static 'js/html2canvas.js' %}"></script>
 </html>

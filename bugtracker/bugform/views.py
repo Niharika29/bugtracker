@@ -39,16 +39,8 @@ def index(request):
 			#formInstance.desc = request.desc
 			#formInstance.save()
             #Process data in form.cleaned_data
-			name = 'Niharika'
 			template = 'postform.html'
-			email = request.POST['email']
-			bug = request.POST['desc']
-			#image = request.POST['img']
-			ip = getip(request)
-			geocity = pygeoip.GeoIP('GeoLiteCity.dat')
-			city = geocity.record_by_addr('122.161.236.2')
-			context = { 'name':name, 'email':email, 'bug':bug, 'ip':ip, 'city':city['city'], 'country':city['country_name'], 'timezone':city['time_zone'] }
-			return render(request, template, context)
+			return render(request, template)
 
 	else:
 		ip = getip(request)
