@@ -35,7 +35,7 @@ def index(request):
 	else:
 		ip = get_ip(request)
 		geocity = pygeoip.GeoIP('GeoLiteCity.dat')
-		city = geocity.record_by_addr('ip')
+		city = geocity.record_by_addr('122.161.236.2')
 		data = {'ip':ip, 
 			'city': city['city'],
 			'country': city['country_name'],
