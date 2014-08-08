@@ -3,6 +3,7 @@
 	<head><title>Bug Report Form</title></head>
 	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 	<body>
+		<div id="container">
 		<h4><center>Hello! Please fill in your email and bug desciption in the fields below! Rest of the data we are collecting just to determine possible causes of the issue. Learn more about it _here_.</center></h4>
 		<form id="bug-form" action = "" method = "POST">
 		{% csrf_token %}
@@ -12,6 +13,7 @@
 			<input type="submit" onclick="capture()">
 			<input type="hidden" id="loadtime" value="">
 		</form>
+		</div>
 	</body>
 	<script src="{% static 'js/bugtracker.js' %}"></script>
 	<script src="{% static 'js/fetchdata.js' %}"></script>
