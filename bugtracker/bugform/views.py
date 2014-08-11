@@ -7,23 +7,29 @@ from bugform.models import BugModel, AdminModel
 import django_tables2 as tables 
 from django_tables2 import RequestConfig
 from ipware.ip import get_ip
+from django.contrib.auth.decorators import login_required
 
-def admin(request):
+def loginuser(request):
 	if request.method == 'POST':
-		username = request.POST['username']
-		password = request.POST['password']
+		username = request.POST.get('username', False)
+		password = request.POST.get('password', False)
 		user = authenticate(username=username, password=password)
 		if user is not None:
-			q = BugModel.objects.all()
-			table = SimpleTable(q)
-			RequestConfig(request).configure(table)
-			return render(request, 'bugreports.html', {'table':table} )
+			login(request, user)
+			return admin(request)
 		else:
 			return HttpResponse('You are dead!')
+	else:
+		form = AdminForm()
+		return render(request, 'adminform.html', {'form': form})
+
+@login_required
+def admin(request):
+	q = BugModel.objects.all()
+	table = SimpleTable(q)
+	RequestConfig(request).configure(table)
+	return render(request, 'bugreports.html', {'table':table} )
 		
-	form = AdminForm()
-	return render(request, 'adminform.html', { 'form': form, })
-	
 def index(request):
 	if request.method == 'POST':
 		form = BugForm(request.POST)
@@ -37,22 +43,14 @@ def index(request):
 		geocity = pygeoip.GeoIP('GeoLiteCity.dat')
 		city = geocity.record_by_addr(ip)
 		data = {'ip':ip, 
-			'city': city['city'],
-			'country': city['country_name'],
-			'timezone': city['time_zone'] 
+			'city': 'Delhi',
+			'country': 'country_name',
+			'timezone': 'time_zone' 
 		}
 		
 		form = BugForm(initial=data)
 		
 	return render(request, 'data.html', { 'form': form, })
-	
-def getip(request):
-	xforwardedfor = request.META.get('HTTP_X_FORWARDED_FOR')
-	if xforwardedfor:
-		ip = xforwardedfor.split(',')[0]
-	else:
-		ip = request.META.get('REMOTE_ADDR') 
-	return ip
 	
 def bug_edit(request, pk):
 	if request.method == 'POST':

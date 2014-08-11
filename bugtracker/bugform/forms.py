@@ -21,7 +21,7 @@ class BugForm(ModelForm):
 			'netspeed':forms.HiddenInput(),
 			'desc':forms.Textarea,
 			'bugpriority':forms.RadioSelect()
-			}
+		}
 
 		
 class AdminForm(ModelForm):
