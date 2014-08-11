@@ -26,7 +26,7 @@ class BugForm(ModelForm):
 class SearchForm(ModelForm):
 	class Meta:
 		model = BugModel
-		fields = ['browser', 'bugstatus', 'os']
+		fields = ['desc']
 		
 class AdminForm(ModelForm):
 	class Meta:

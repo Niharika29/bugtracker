@@ -46,8 +46,8 @@ def index(request):
 		city = geocity.record_by_addr(ip)
 		data = {'ip':ip, 
 			'city': 'Delhi',
-			'country': city['country_name'],
-			'timezone': city['time_zone'] 
+			'country': 'country_name',
+			'timezone': 'time_zone' 
 		}
 		
 		form = BugForm(initial=data)
@@ -56,12 +56,12 @@ def index(request):
 	
 def bug_search(request):
 	if request.method == 'POST':
-		q = BugModel.objects.filter(id = "1")
+		desc = request.POST.get('desc')
+		q = BugModel.objects.filter(desc__icontains=desc)
 		table = SimpleTable(q)
 		RequestConfig(request).configure(table)
 		return render(request, 'bugreports.html', {'table':table} )
 	else:
-		data = { 'ip': '' }
 		form = SearchForm()
 		return render(request, 'bug_search.html', {'form' : form} )
 	#return HttpResponse('My mind palace')
