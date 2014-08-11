@@ -1,1 +1,13 @@
 /*! project specific CSS goes here. */
+body {
+	font-size: 14px;
+	font-family: "Calibri", sans-serif;
+	font-weight: 200;
+}
+
+label {
+	color: #de5151;
+	padding: 10px auto;
+	font-size: 1.5em;
+}
+
