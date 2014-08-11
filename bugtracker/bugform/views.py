@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 import pygeoip
 from bugform.forms import BugForm, AdminForm, SimpleTable
 from bugform.models import BugModel, AdminModel
@@ -88,3 +88,6 @@ def bug_delete(request, pk):
 	record.delete()
 	return HttpResponseRedirect('../../admin')
 		
+def logout_user(request):
+	logout(request)
+	return index(request)
