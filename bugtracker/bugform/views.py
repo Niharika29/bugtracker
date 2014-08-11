@@ -19,6 +19,8 @@ def loginuser(request):
 			return admin(request)
 		else:
 			return HttpResponse('You are dead!')
+	if request.user.is_authenticated() and request.method == 'GET':
+		return admin(request)
 	else:
 		form = AdminForm()
 		return render(request, 'adminform.html', {'form': form})
