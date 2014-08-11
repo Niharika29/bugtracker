@@ -54,6 +54,13 @@ def index(request):
 		
 	return render(request, 'data.html', { 'form': form, })
 	
+def bug_search(request):
+	q = BugModel.objects.filter(id = "1")
+	table = SimpleTable(q)
+	RequestConfig(request).configure(table)
+	return render(request, 'bugreports.html', {'table':table} )
+	#return HttpResponse('My mind palace')
+
 def bug_edit(request, pk):
 	if request.method == 'POST':
 		record = BugModel.objects.get(pk=pk)
