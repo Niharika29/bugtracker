@@ -5,6 +5,10 @@ from django_tables2.utils import A
 from django import forms
 
 class BugForm(ModelForm):
+	def __init__(self, *args, **kwargs):
+		super(BugForm, self).__init__(*args, **kwargs)
+		self.fields['desc'].label = "Description"
+		self.fields['bugpriority'].label = "Bug Priority"
 	class Meta:
 		model = BugModel
 		fields = ['email', 'desc', 'date', 'loadtime', 'city', 'country', 'timezone', 'ip', 'netspeed', 'os', 'browser', 'bugstatus','bugpriority']
@@ -24,6 +28,9 @@ class BugForm(ModelForm):
 		}
 
 class SearchForm(ModelForm):
+	def __init__(self, *args, **kwargs):
+		super(SearchForm, self).__init__(*args, **kwargs)
+		self.fields['desc'].label = "Description"
 	class Meta:
 		model = BugModel
 		fields = ['desc']

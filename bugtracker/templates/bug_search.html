@@ -3,12 +3,15 @@
 	<head><title>Bug Report Form</title></head>
 	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 	<body>
+		<div id='container'>
 		<form id="bug-form" action = "" method = "POST">
 		{% csrf_token %}
+			<div id= 'header'>Enter the string to be searched in the Bug description field below:</div>
 			{{ form.as_p }}
 			<input type="submit">
 			<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}"/>
 			<link rel="stylesheet" type="text/css" href="{% static 'css/bugtracker.css' %}"/>
 		</form>
+		</div>
 	</body>
 </html>
