@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 import pygeoip
-from bugform.forms import BugForm, AdminForm, SimpleTable
+from bugform.forms import BugForm, AdminForm, SimpleTable, SearchForm
 from bugform.models import BugModel, AdminModel
 import django_tables2 as tables 
 from django_tables2 import RequestConfig
@@ -46,8 +46,8 @@ def index(request):
 		city = geocity.record_by_addr(ip)
 		data = {'ip':ip, 
 			'city': 'Delhi',
-			'country': 'country_name',
-			'timezone': 'time_zone' 
+			'country': city['country_name'],
+			'timezone': city['time_zone'] 
 		}
 		
 		form = BugForm(initial=data)
@@ -55,10 +55,15 @@ def index(request):
 	return render(request, 'data.html', { 'form': form, })
 	
 def bug_search(request):
-	q = BugModel.objects.filter(id = "1")
-	table = SimpleTable(q)
-	RequestConfig(request).configure(table)
-	return render(request, 'bugreports.html', {'table':table} )
+	if request.method == 'POST':
+		q = BugModel.objects.filter(id = "1")
+		table = SimpleTable(q)
+		RequestConfig(request).configure(table)
+		return render(request, 'bugreports.html', {'table':table} )
+	else:
+		data = { 'ip': '' }
+		form = SearchForm()
+		return render(request, 'bug_search.html', {'form' : form} )
 	#return HttpResponse('My mind palace')
 
 def bug_edit(request, pk):

@@ -23,6 +23,10 @@ class BugForm(ModelForm):
 			'bugpriority':forms.RadioSelect()
 		}
 
+class SearchForm(ModelForm):
+	class Meta:
+		model = BugModel
+		fields = ['browser', 'bugstatus', 'os']
 		
 class AdminForm(ModelForm):
 	class Meta:
