@@ -47,9 +47,9 @@ def index(request):
 		video_quality = request.GET.get('quality', None)
 		video_format = request.GET.get('format', None)
 		data = {'ip':ip, 
-			'city': 'Delhi',
-			'country': 'country_name',
-			'timezone': 'time_zone',
+			'city': city['city'],
+			'country': city['country_name'],
+			'timezone': city['time_zone'],
 			'video_format': video_format,
 			'video_quality': video_quality 
 		}
