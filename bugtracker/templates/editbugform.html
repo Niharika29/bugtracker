@@ -5,14 +5,14 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}"/>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/bugtracker.css' %}"/>
 	<body>
-		<h2>Welcome {{ some_name }}</h2>
-		<form id="bug-form" action = "" method = "POST">
-		{% csrf_token %}
-		<table id='bugreptable'>
-			{{ form.as_table }}
-		</table>
-			<input type="submit" onclick="capture()">
-		</form>
+		<div class="header"><center>Edit record</center></div>
+		<div class = "content">
+			<form id="bug-form" action = "" method = "POST">
+			{% csrf_token %}
+				<table id='bugreptable'>{{ form.as_table }}</table>
+				<input type="submit" onclick="capture()">
+			</form>
+		</div>
 		<div class='footer'>This app was made as part of a GSoC project. 
 			<a href="https://github.com/Niharika29/bugtracker">Fork on github</a>
 		</div>

@@ -2,7 +2,7 @@ body {
 	margin: 0;
 }
 
-input[type=text], #id_desc {
+input[type=text], #id_desc, input[type=number] {
     padding: 8px;
 }
 

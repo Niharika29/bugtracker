@@ -10,7 +10,7 @@ label {
 	font-size: 1.2em;
 }
 
-#content-form {
+.content {
 	margin: 50px auto;
 	width: 300px;
 	line-height: 1.2em;
@@ -30,7 +30,7 @@ label {
 
 .footer {
 	width: 100%;
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	height: 22px;
 	font-size: 14px;
