@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 import pygeoip
-from bugform.forms import BugForm, AdminForm, SimpleTable, SearchForm
+from bugform.forms import BugForm, AdminForm, SimpleTable, SearchForm, EditForm
 from bugform.models import BugModel, AdminModel
 import django_tables2 as tables 
 from django_tables2 import RequestConfig
@@ -48,9 +48,9 @@ def index(request):
 		video_format = request.GET.get('format', None)
 		stream_title = request.GET.get('path', None)
 		data = {'ip':ip, 
-			'city': 'city',
-			'country': 'country_name',
-			'timezone': 'time_zone',
+			'city': city['city'],
+			'country': city['country_name'],
+			'timezone': city['time_zone'],
 			'video_format': video_format,
 			'video_quality': video_quality,
 			'stream_title': stream_title
@@ -75,7 +75,7 @@ def bug_search(request):
 def bug_edit(request, pk):
 	if request.method == 'POST':
 		record = BugModel.objects.get(pk=pk)
-		form = BugForm(request.POST, instance=record)
+		form = EditForm(request.POST, instance=record)
 		if form.is_valid():
 			form.save()
 			return HttpResponseRedirect('../../admin')
@@ -98,7 +98,7 @@ def bug_edit(request, pk):
 			'bugpriority': record.bugpriority
 		}
 		
-		form = BugForm(initial=data)
+		form = EditForm(initial=data)
 	return render(request, 'editbugform.html', { 'form': form, })
 	
 def bug_delete(request, pk):

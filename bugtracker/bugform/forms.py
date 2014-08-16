@@ -30,6 +30,19 @@ class BugForm(ModelForm):
 			'video_quality':forms.HiddenInput(),
 			'stream_title': forms.HiddenInput()
 		}
+		
+class EditForm(ModelForm):
+	def __init__(self, *args, **kwargs):
+		super(EditForm, self).__init__(*args, **kwargs)
+		self.fields['desc'].label = "Description"
+		self.fields['bugpriority'].label = "Bug Priority"
+	class Meta:
+		model = BugModel
+		fields = ['email', 'desc', 'date', 'loadtime', 'city', 'country', 'timezone', 'ip', 'netspeed', 'os', 'browser', 'bugstatus','bugpriority', 'video_format', 'video_quality', 'stream_title']
+		widgets = {
+			'desc':forms.Textarea,
+			'bugpriority':forms.RadioSelect(),
+		}
 
 class SearchForm(ModelForm):
 	def __init__(self, *args, **kwargs):
