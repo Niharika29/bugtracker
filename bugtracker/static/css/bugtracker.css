@@ -32,10 +32,11 @@ label {
 	width: 100%;
 	position: absolute;
 	bottom: 0;
-	height: 20px;
-	font-size: 12px;
-	background-color: #008080;
+	height: 22px;
+	font-size: 14px;
+	background-color: #adacac;
 	color: white;
-	padding: 4px;
+	line-height: 22px;
+	vertical-align: middle;
 	text-align: center;
 }
