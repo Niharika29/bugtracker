@@ -13,7 +13,10 @@ class BugModel(models.Model):
 	country = models.CharField(max_length=50)
 	timezone = models.CharField(max_length=100)
 	framerate = models.FloatField(default='0')
-	
+	video_format = models.CharField(max_length=100, default='Auto')
+	video_quality = models.CharField(max_length=100, default='Auto')
+	stream_title = models.CharField(max_length=100, default='None')
+
 	STATUS_CHOICES = (
 		('New', 'New'),
 		('Assigned', 'Assigned'),

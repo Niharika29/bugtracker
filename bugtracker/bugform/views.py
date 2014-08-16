@@ -31,7 +31,7 @@ def admin(request):
 	table = SimpleTable(q)
 	RequestConfig(request).configure(table)
 	return render(request, 'bugreports.html', {'table':table} )
-		
+
 def index(request):
 	if request.method == 'POST':
 		form = BugForm(request.POST)
@@ -44,10 +44,14 @@ def index(request):
 		ip = get_ip(request)
 		geocity = pygeoip.GeoIP('GeoLiteCity.dat')
 		city = geocity.record_by_addr(ip)
+		video_quality = request.GET.get('quality', None)
+		video_format = request.GET.get('format', None)
 		data = {'ip':ip, 
 			'city': 'Delhi',
 			'country': 'country_name',
-			'timezone': 'time_zone' 
+			'timezone': 'time_zone',
+			'video_format': video_format,
+			'video_quality': video_quality 
 		}
 		
 		form = BugForm(initial=data)
