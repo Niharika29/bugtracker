@@ -1,7 +1,14 @@
-input[type=text] {
-    padding: 8px;
-    font-size: 1.2em;
+body {
+	margin: 0;
 }
+
+input[type=text], #id_desc {
+    padding: 8px;
+}
+
+#id_desc {
+	font-family: "Calibri", sans-serif;
+} 
 
 #container {
 	text-align: center;
@@ -10,6 +17,12 @@ input[type=text] {
 }
 
 #header {
+	width: 100%;
+	height: 100px;
+	vertical-align: middle;
+	line-height: 100px;
+	background-color: #008080;
+	color: white;
 	font-size: 18px;
 	padding: 16px;
 }
@@ -17,12 +30,12 @@ input[type=text] {
 input[type=submit] {
 	padding: 10px 40px;
 	color:white;
-	background:#de5151;
+	background:#008080;
 	font-size: 16px;
 	outline: none;
 	border-style: none;
 	border-radius: 20px;
-	font-weight: 600;
+	font-weight: 700;
 	-webkit-transition: 0.5s;
 	-moz-transition: 0.5s;
 	-o-transition: 0.5s;
@@ -30,8 +43,8 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-	border: 2px solid #de5151;
-	color: #de5151;
+	border: 2px solid #008080;
+	color: #008080;
 	background: white;
 	cursor: pointer;
 }

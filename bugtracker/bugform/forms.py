@@ -13,6 +13,7 @@ class BugForm(ModelForm):
 		model = BugModel
 		fields = ['email', 'desc', 'date', 'loadtime', 'city', 'country', 'timezone', 'ip', 'netspeed', 'os', 'browser', 'bugstatus','bugpriority', 'video_format', 'video_quality', 'stream_title']
 		widgets = {
+			'email': forms.TextInput(attrs={'placeholder':'Your email address'}),
 			'browser':forms.HiddenInput(),
 			'os':forms.HiddenInput(),
 			'city':forms.HiddenInput(),
@@ -23,7 +24,7 @@ class BugForm(ModelForm):
 			'timezone':forms.HiddenInput(),
 			'ip':forms.HiddenInput(),
 			'netspeed':forms.HiddenInput(),
-			'desc':forms.Textarea,
+			'desc':forms.Textarea and forms.Textarea(attrs={'placeholder':'A summary of the bug and steps to reproduce'}),
 			'bugpriority':forms.RadioSelect(),
 			'video_format':forms.HiddenInput(),
 			'video_quality':forms.HiddenInput(),
