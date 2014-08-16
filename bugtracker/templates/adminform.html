@@ -3,12 +3,18 @@
 	<head><title>Bug Report Form</title></head>
 	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 	<body>
+		<div class="header"><center>Login for the Admin</center></div>
+		<div id='content-form'>
 		<form id="bug-form" action = "" method = "POST">
 		{% csrf_token %}
-			{{ form.as_p }}
+			{{ form.as_table }}
 			<input type="submit">
+		</div>
 			<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}"/>
 			<link rel="stylesheet" type="text/css" href="{% static 'css/bugtracker.css' %}"/>
 		</form>
+		<div class='footer'>This app was made as part of a GSoC project. 
+			<a href="https://github.com/Niharika29/bugtracker">Fork on github</a>
+		</div>
 	</body>
 </html>

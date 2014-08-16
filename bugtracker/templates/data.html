@@ -3,7 +3,7 @@
 	<head><title>Bug Report Form</title></head>
 	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 	<body>
-		<div id="header"><center>Hi there! We need your help to resolve this bug.</center></div>
+		<div class="header"><center>Hi there! We need your help to resolve this bug.</center></div>
 		<div id="container">
 		<form id="bug-form" action = "" method = "POST">
 		{% csrf_token %}
@@ -13,6 +13,9 @@
 			<input type="submit" onclick="capture()">
 			<input type="hidden" id="loadtime" value="">
 		</form>
+		</div>
+		<div class='footer'>This app was made as part of a GSoC project. 
+			<a href="https://github.com/Niharika29/bugtracker">Fork on github</a>
 		</div>
 	</body>
 	<script src="{% static 'js/bugtracker.js' %}"></script>
