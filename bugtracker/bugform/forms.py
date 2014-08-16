@@ -11,7 +11,7 @@ class BugForm(ModelForm):
 		self.fields['bugpriority'].label = "Bug Priority"
 	class Meta:
 		model = BugModel
-		fields = ['email', 'desc', 'date', 'loadtime', 'city', 'country', 'timezone', 'ip', 'netspeed', 'os', 'browser', 'bugstatus','bugpriority', 'video_format', 'video_quality']
+		fields = ['email', 'desc', 'date', 'loadtime', 'city', 'country', 'timezone', 'ip', 'netspeed', 'os', 'browser', 'bugstatus','bugpriority', 'video_format', 'video_quality', 'stream_title']
 		widgets = {
 			'browser':forms.HiddenInput(),
 			'os':forms.HiddenInput(),
@@ -26,7 +26,8 @@ class BugForm(ModelForm):
 			'desc':forms.Textarea,
 			'bugpriority':forms.RadioSelect(),
 			'video_format':forms.HiddenInput(),
-			'video_quality':forms.HiddenInput()
+			'video_quality':forms.HiddenInput(),
+			'stream_title': forms.HiddenInput()
 		}
 
 class SearchForm(ModelForm):

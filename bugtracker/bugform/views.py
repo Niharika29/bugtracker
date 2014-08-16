@@ -46,12 +46,14 @@ def index(request):
 		city = geocity.record_by_addr(ip)
 		video_quality = request.GET.get('quality', None)
 		video_format = request.GET.get('format', None)
+		stream_title = request.GET.get('path', None)
 		data = {'ip':ip, 
-			'city': city['city'],
-			'country': city['country_name'],
-			'timezone': city['time_zone'],
+			'city': 'city',
+			'country': 'country_name',
+			'timezone': 'time_zone',
 			'video_format': video_format,
-			'video_quality': video_quality 
+			'video_quality': video_quality,
+			'stream_title': stream_title
 		}
 		
 		form = BugForm(initial=data)
