@@ -13,6 +13,8 @@ task is the command to run.
 
 Example usages:
 
+For a system that is already configured:
+
 Deploy the default version to the vagrant environment
 
 $ fab vagrant deploy
@@ -24,6 +26,11 @@ $ fab vagrant deploy:576a8e4241962464f4ac9c11cd5054e306f2f0d1
 Deploy the specified tag
 
 $ fab vagrant deploy:origin/v1.0003
+
+For a new system, run the provision task before running deploy.
+This will require that you have a box with a sudo user.
+
+$ fab vagrant provision
 
 """
 
@@ -192,7 +199,6 @@ def deploy_supervisor():
 def staging():
 	"""Configures settings for deployment to a vagrant box """
 	env.hosts = ['niharika@23.253.42.97']
-	env.password = 'V5Qc&=HW`=iT=_I8%Q3Tc:;V)OoCj[N`'
 	env.update({
 		'SERVER_NAME':'niharika@23.253.42.97',
 		'DJANGO_SETTINGS_MODULE':'bugtracker.settings.production',
